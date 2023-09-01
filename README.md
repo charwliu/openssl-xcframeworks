@@ -54,7 +54,7 @@ and easily allow you to integrate _all_ platforms and architectures in a single 
 # Compile library
 
 
-Compile OpenSSL at the default version (currently 1.1.1d) for default targets:
+Compile OpenSSL at the default version (currently 3.1.2) for default targets:
 
 ```
 ./build-openssl.sh
@@ -63,7 +63,7 @@ Compile OpenSSL at the default version (currently 1.1.1d) for default targets:
 Compile OpenSSL at the default version for specific targets:
 
 ```
-./build-openssl.sh --version=1.1.1d --targets="ios-cross-armv7 macos64-x86_64"
+./build-openssl.sh --version=3.1.2 --targets="ios64-cross-arm64 macos64-x86_64"
 ```
 
 For all options see:
