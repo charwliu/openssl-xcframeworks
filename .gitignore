@@ -1,0 +1,10 @@
+.DS_Store
+.*.swp
+bin
+src
+lib
+frameworks
+include/openssl
+*.gz
+*.framework
+Carthage
