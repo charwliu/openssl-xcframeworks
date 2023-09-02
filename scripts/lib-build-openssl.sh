@@ -93,6 +93,12 @@ prepare_target_source_dirs()
   tar zxf "${CURRENTPATH}/${OPENSSL_ARCHIVE_FILE_NAME}" -C "${SOURCEDIR}"
   cd "${SOURCEDIR}/${OPENSSL_ARCHIVE_BASE_NAME}"
   chmod u+x ./Configure
+
+  local PATCH_FILE="${CURRENTPATH}/assets/openssl-${VERSION}.patch"
+  set -x
+  if [ -f "$PATCH_FILE" ]; then
+     patch -d "${SOURCEDIR}" -p0 < $PATCH_FILE
+  fi
 }
 
 
@@ -326,4 +332,11 @@ locate_openssl_archive()
 	else
 	  echo "Using ${OPENSSL_ARCHIVE_FILE_NAME}"
 	fi
+}
+
+swift_module_map() {
+  echo 'module openssl {'
+  echo '    header "openssl.h"'
+  echo '    export *'
+  echo '}'
 }

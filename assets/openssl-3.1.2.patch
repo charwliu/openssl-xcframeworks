@@ -1,0 +1,25 @@
+diff -Naur openssl-3.1.2/crypto/evp/evp_lib.c openssl-3.1.2.new/crypto/evp/evp_lib.c
+--- openssl-3.1.2/crypto/evp/evp_lib.c	2023-08-01 21:36:55.000000000 +0800
++++ openssl-3.1.2.new/crypto/evp/evp_lib.c	2023-09-01 20:41:02.228708434 +0800
+@@ -1227,4 +1227,8 @@
+     return ret;
+ }
+ 
++EVP_PKEY *EVP_EC_gen_wrapped(const char *curve) {
++    return EVP_EC_gen(curve);
++}
++
+ #endif /* !defined(FIPS_MODULE) */
+diff -Naur openssl-3.1.2/include/openssl/ec.h openssl-3.1.2.new/include/openssl/ec.h
+--- openssl-3.1.2/include/openssl/ec.h	2023-08-01 21:36:55.000000000 +0800
++++ openssl-3.1.2.new/include/openssl/ec.h	2023-09-01 20:35:51.759851614 +0800
+@@ -1554,6 +1554,9 @@
+ #  define EVP_EC_gen(curve) \
+     EVP_PKEY_Q_keygen(NULL, NULL, "EC", (char *)(strstr(curve, "")))
+     /* strstr is used to enable type checking for the variadic string arg */
++
++EVP_PKEY *EVP_EC_gen_wrapped(const char *curve);
++
+ #  define ECParameters_dup(x) ASN1_dup_of(EC_KEY, i2d_ECParameters, \
+                                           d2i_ECParameters, x)
+ 

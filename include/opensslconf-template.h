@@ -6,5 +6,7 @@
  * See also https://github.com/x2on/OpenSSL-for-iPhone/issues/126 and referenced pull requests
  */
 
+#pragma once
+
 #include <TargetConditionals.h>
 

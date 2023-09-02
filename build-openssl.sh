@@ -472,6 +472,8 @@ fi
 # Copy include directory
 cp -R "${INCLUDE_DIR}" "${CURRENTPATH}/include/"
 
+swift_module_map >"${CURRENTPATH}/include/module.modulemap"
+
 echo "  =====>Include directory:"
 echo "    ${CURRENTPATH}/include/"
 

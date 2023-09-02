@@ -272,9 +272,11 @@ build_dynamic_framework() {
 
     if [[ ${#FILES[@]} -gt 0 && -e ${FILES[0]} ]]; then
         printf "Creating dynamic framework for $SYS ($(basename $(dirname $FWDIR)))..."
-        mkdir -p $FWDIR/Headers
+        mkdir -p $FWDIR/Headers/$FWNAME
         lipo -create ${FILES[@]} -output $FWDIR/$FWNAME
-        cp -r include/$FWNAME/* $FWDIR/Headers/
+        cp -r include/$FWNAME/* $FWDIR/Headers/$FWNAME/
+        cp -r $SCRIPTDIR/assets/openssl.h $FWDIR/Headers/
+        cp -r $SCRIPTDIR/assets/module.modulemap $FWDIR/Headers/
         cp -L $SCRIPTDIR/assets/$SYS/Info.plist $FWDIR/Info.plist
         MIN_SDK_VERSION=$(get_min_sdk "$FWDIR/$FWNAME")
         OPENSSL_VERSION=$(get_openssl_version "$FWDIR/Headers/opensslv.h")
@@ -312,9 +314,12 @@ build_static_framework() {
         lipo -create ${LIBS_SSL[@]} -output $FWDIR/lib/libssl.a
         libtool -no_warning_for_no_symbols -static -o $FWDIR/$FWNAME $FWDIR/lib/*.a
         rm -rf $FWDIR/lib
-        mkdir -p $FWDIR/Headers
-        cp -r include/$FWNAME/* $FWDIR/Headers/
-        cp -L $SCRIPTDIR/assets/$SYS/Info.plist $FWDIR/Info.plist
+        mkdir -p $FWDIR/Headers/$FWNAME
+        mkdir -p $FWDIR/Modules
+        cp -r include/$FWNAME/* $FWDIR/Headers/$FWNAME/
+        cp -r $SCRIPTDIR/assets/openssl.h $FWDIR/Headers/
+        cp -r $SCRIPTDIR/assets/module.modulemap $FWDIR/Modules/
+        cp -L $SCRIPTDIR/assets/Info.plist $FWDIR/Info.plist
         MIN_SDK_VERSION=$(get_min_sdk "$FWDIR/$FWNAME")
         OPENSSL_VERSION=$(get_openssl_version "$FWDIR/Headers/opensslv.h")
         sed -e "s/\\\$(MIN_SDK_VERSION)/$MIN_SDK_VERSION/g" \
